@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh" class="js">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>{{ .title }} - Be cool, but also be warm.</title> -->
+    <title>{{ .title }}</title>
+    <script>document.documentElement.className = "js"; var supportsCssVars = function () { var e, t = document.createElement("style"); return t.innerHTML = "root: { --tmp-var: bold; }", document.head.appendChild(t), e = !!(window.CSS && window.CSS.supports && window.CSS.supports("font-weight", "var(--tmp-var)")), t.parentNode.removeChild(t), e }; supportsCssVars() || alert("Please view this demo in a modern browser that supports CSS Variables.");</script>
+    <link href="/static/css/vendors.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+    <script src="/static/js/CalculateCIDR.js"></script>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/toolbox-ip.css">
+    <style>
+        .label{
+            color:aliceblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background" style="transform: matrix(1, 0, 0, 1, 0, -300);"></div>
+    <div class="overlay" style="opacity: 0;"></div>
+    <main>
+        <div class="content" style="position: absolute; z-index: 10">
+            <div class="tab_content">
+                <div class="centered-text">
+                    IP地址计算器
+                </div>
+                <div class="input_area">
+                    <input type="text" id="cidr" class="form-control" placeholder="192.168.0.0/12"/>
+                    <button id="calculate" class="preview_btn btn btn-primary" onclick=calculate()>计算</button>
+                </div>
+                <div class="result_area glowing-text">
+                    <p>
+                        <span class="label">子网掩码：</span><span id="netmask"></span>
+                    </p>
+                    <p>
+                        <span class="label">网络地址：</span><span id="netaddress"></span>
+                    </p>
+                    <p>
+                        <span class="label">广播地址：</span><span id="broadcast"></span>
+                    </p>
+                    <p>
+                        <span class="label">起始IP：</span><span id="startip"></span>
+                    </p>
+                    <p>
+                        <span class="label">结束IP：</span><span id="endip"></span>
+                    </p>
+                    <p>
+                        <span class="label">IP数：</span><span id="hostnum"></span>
+                    </p>
+                    <p>
+                        <span class="label">更多工具，随后上线！</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="frame">
+            <div class="frame__title-wrap">
+                <h1 class="frame__title" style="color:white;">{{ .title }}...</h1>
+            </div>
+
+            <div
+                style="width:100%; text-align: center; position: absolute; left: 50%; transform: translate(-50%); bottom: 1rem;">
+                <p><a href="https://beian.miit.gov.cn/" rel="nofollow" style="text-transform:uppercase;">{{ .icp }}</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script type="text/javascript" src="/static/js/vendors.js"></script>
+    <script type="text/javascript" src="/static/js/index.js"></script><canvas width="1568" height="1465"
+        style="position: absolute; top: 0px; left: 0px; z-index: -1; width: 980px; height: 916px;"></canvas>
+    <script>
+        function calculate() {
+            var cidr = document.getElementById("cidr").value;
+            if (cidr.split('/').length != 2) {
+                alert("CIDR地址不正确");
+            } else {
+                var result = CalculateCIDR(cidr);
+                document.getElementById("netmask").innerHTML = result[0];
+                document.getElementById("netaddress").innerHTML = result[1];
+                document.getElementById("broadcast").innerHTML = result[2];
+                document.getElementById("startip").innerHTML = result[3];
+                document.getElementById("endip").innerHTML = result[4];
+                document.getElementById("hostnum").innerHTML = result[5];
+            }
+        }
+    </script>
+</body>
+
+</html>
